@@ -32,6 +32,7 @@ import tempy from 'tempy';
 // @endif
 
 const MODES = Object.values(PUBLISH_MODES);
+const FORCE_LIVESTREAM_TAG = 'dev-livestream';
 
 const MODE_TO_I18N_STR = {
   [PUBLISH_MODES.FILE]: 'File',
@@ -387,6 +388,11 @@ function PublishForm(props: Props) {
               newTags.forEach((newTag) => {
                 if (!tags.some((tag) => tag.name === newTag.name)) {
                   validatedTags.push(newTag);
+
+                  // Mark as livestream if special tag is added
+                  if (newTag.name === FORCE_LIVESTREAM_TAG) {
+                    updatePublishForm({ isLiveStreamPublish: true });
+                  }
                 }
               });
               updatePublishForm({ tags: [...tags, ...validatedTags] });
@@ -394,6 +400,11 @@ function PublishForm(props: Props) {
             onRemove={(clickedTag) => {
               const newTags = tags.slice().filter((tag) => tag.name !== clickedTag.name);
               updatePublishForm({ tags: newTags });
+
+              // Remove the mark as livestream if special tag is removed
+              if (clickedTag.name === FORCE_LIVESTREAM_TAG) {
+                updatePublishForm({ isLiveStreamPublish: false });
+              }
             }}
             tagsChosen={tags}
           />
