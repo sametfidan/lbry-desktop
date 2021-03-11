@@ -12,6 +12,7 @@ import Icon from 'component/common/icon';
 import { Form, FormField } from 'component/common/form';
 import { DEBOUNCE_WAIT_DURATION_MS } from 'constants/search';
 import { lighthouse } from 'redux/actions/search';
+import LivestreamLink from 'component/livestreamLink';
 
 type Props = {
   uri: string,
@@ -102,6 +103,8 @@ function ChannelContent(props: Props) {
 
   return (
     <Fragment>
+      <LivestreamLink uri={uri} />
+
       {!fetching && Boolean(claimsInChannel) && !channelIsBlocked && !channelIsBlackListed && (
         <HiddenNsfwClaims uri={uri} />
       )}

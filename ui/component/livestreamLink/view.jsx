@@ -23,7 +23,7 @@ export default function LivestreamLink(props: Props) {
     })
       .then((res) => {
         if (res && res.items && res.items.length > 0) {
-          const claim = res.items[0];
+          const claim = res.items[res.items.length - 1];
           setLivestreamClaim(claim);
         }
       })
@@ -52,6 +52,8 @@ export default function LivestreamLink(props: Props) {
     //     clearInterval(interval);
     //   }
     // };
+
+    setTimeout(() => setIsLivestreaming(true), 5000);
   }, [livestreamChannelId]);
 
   if (!livestreamClaim || !isLivestreaming) {
